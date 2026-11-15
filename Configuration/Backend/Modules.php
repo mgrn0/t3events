@@ -11,17 +11,18 @@ use DWenzel\T3events\Controller\Backend\ScheduleController;
  */
 return [
     'events' => [
-        'position' => ['after' => 'system_reports'],
-        'access' => 'user,group',
+        'position' => ['before' => 'site'],
+        'access' => 'user',
         'workspaceSupport' => false,
         'labels' => 'LLL:EXT:t3events/Resources/Private/Language/locallang_mod_main.xlf',
         'iconIdentifier' => 'ext-t3events-main',
     ],
     'events_m1' => [
         'parent' => 'events',
-        'position' => ['after' => 'system_reports'],
-        'access' => 'user,group',
+        'position' => ['after' => 'events'],
+        'access' => 'user',
         'workspaceSupport' => false,
+        'navigationComponent' => '@typo3/backend/tree/page-tree-element',
         'path' => '/module/events/event',
         'extensionName' => 'T3events',
         'labels' => 'LLL:EXT:t3events/Resources/Private/Language/locallang_mod_main.xlf',
@@ -32,9 +33,10 @@ return [
     ],
     'events_m2' => [
         'parent' => 'events',
-        'position' => ['after' => 'system_reports'],
-        'access' => 'user,group',
+        'position' => ['after' => 'events_m1'],
+        'access' => 'user',
         'workspaceSupport' => false,
+        'navigationComponent' => '@typo3/backend/tree/page-tree-element',
         'path' => '/module/events/schedule',
         'extensionName' => 'T3events',
         'labels' => 'LLL:EXT:t3events/Resources/Private/Language/locallang_m2.xlf',

@@ -61,6 +61,15 @@ class Notification extends AbstractEntity
     #[Lazy]
     protected ObjectStorage $attachments;
 
+    public function __construct()
+    {
+        $this->initializeObject();
+    }
+
+    /**
+     * Called by Extbase after an object has been reconstituted from the database.
+     * The constructor is not invoked in that case.
+     */
     public function initializeObject(): void
     {
         $this->attachments = new ObjectStorage();

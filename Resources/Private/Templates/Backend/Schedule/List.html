@@ -4,7 +4,8 @@
 <f:layout name="Module"/>
 
 <f:comment>Content</f:comment>
-<f:section name="main">
+<f:section name="Content">
+<div class="tx-t3events">
     <f:comment>
         <f:debug>{filterOptions}</f:debug>
         <f:debug>{performances}</f:debug>
@@ -14,7 +15,6 @@
     <f:comment>Search form</f:comment>
     <f:render partial="Backend/Common/SearchForm"
               arguments="{overwriteDemand: overwriteDemand, filterOptions: filterOptions, showSubjectField: settings.search.showSubjectField}"/>
-    <f:flashMessages/>
 
     <f:comment>Paginated list</f:comment>
     <f:if condition="{performances}">
@@ -60,7 +60,5 @@
                 </div>
         </f:then>
     </f:if>
+</div>
 </f:section>
-
-<f:comment>Header buttons</f:comment>
-<f:section name="headerButtons"/>

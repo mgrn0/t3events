@@ -2,6 +2,8 @@
 namespace DWenzel\T3events\Domain\Factory\Dto;
 
 use DWenzel\T3events\Utility\SettingsInterface as SI;
+use ReflectionMethod;
+use ReflectionNamedType;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use DWenzel\T3events\Domain\Model\Dto\OrderAwareDemandInterface;
@@ -100,6 +102,38 @@ abstract class AbstractDemandFactory
             }
             $this->mapPropertyName($propertyName);
             if (ObjectAccess::isPropertySettable($demand, $propertyName)) {
+                $setterName = 'set' . ucfirst($propertyName);
+                if (is_string($propertyValue) && method_exists($demand, $setterName)) {
+                    $reflectionMethod = new ReflectionMethod($demand, $setterName);
+                    $parameters = $reflectionMethod->getParameters();
+                    $type = isset($parameters[0]) ? $parameters[0]->getType() : null;
+
+                    if ($type instanceof ReflectionNamedType && $type->isBuiltin()) {
+                        if ($propertyValue === '' && $type->allowsNull() && $type->getName() !== 'string') {
+                            $propertyValue = null;
+                        } else {
+                            switch ($type->getName()) {
+                                case 'int':
+                                    if (!is_numeric($propertyValue)) {
+                                        continue 2;
+                                    }
+                                    $propertyValue = (int)$propertyValue;
+                                    break;
+                                case 'float':
+                                    if (!is_numeric($propertyValue)) {
+                                        continue 2;
+                                    }
+                                    $propertyValue = (float)$propertyValue;
+                                    break;
+                                case 'bool':
+                                    $propertyValue = (bool)$propertyValue;
+                                    break;
+                                case 'string':
+                                    break;
+                            }
+                        }
+                    }
+                }
                 ObjectAccess::setProperty($demand, $propertyName, $propertyValue);
             }
         }

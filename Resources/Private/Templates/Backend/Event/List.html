@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
       xmlns:f="https://xsd.helhum.io/ns/typo3/cms-fluid/master/ViewHelpers">
 <f:layout name="Module"/>
-<f:section name="main">
+<f:section name="Content">
+<div class="tx-t3events">
     <f:comment>
         <f:debug title="demand">{demand}</f:debug>
         <f:debug title="settings" inline="true">{settings}</f:debug>
@@ -15,7 +16,6 @@
     <f:comment>Search form</f:comment>
     <f:render partial="Backend/Common/SearchForm"
               arguments="{demand: demand, overwriteDemand: overwriteDemand, filterOptions: filterOptions, showSubjectField: settings.search.showSubjectField}"/>
-    <f:flashMessages/>
 
     <f:comment>Paginated list</f:comment>
     <f:if condition="{events}">
@@ -78,8 +78,6 @@
                 </div>
         </f:then>
     </f:if>
+</div>
 </f:section>
 
-<f:comment>Header buttons</f:comment>
-<f:section name="headerButtons">
-</f:section>
